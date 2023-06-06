@@ -2,7 +2,7 @@ import tkinter as tk
 from pytube.exceptions import VideoPrivate
 from pytube.exceptions import VideoUnavailable
 import pytube
-from pytube import YouTube
+from pytube import YouTube as YT
 from googleapiclient.discovery import build
 import os
 import pickle
@@ -147,14 +147,16 @@ def download_vid(song_number):
 
 
 def pytube_download(song_number):
-    yt = YouTube("https://youtu.be/"+ids[song_number])
-    vid = yt.streams.filter(only_audio=True, file_extension="mp4", audio_codec="mp4a.40.5")
+    link = ("https://youtu.be/"+ids[song_number])
+    video = YT(link, use_oauth=True, allow_oauth_cache=True)
+    vid = video.streams
+    vid.filter(only_audio=True, file_extension="mp4", audio_codec="mp4a.40.5")
     if len(vid) == 1:
         vid[0].download(r"C:\YTDownloads")
     elif len(vid) == 0 or len(vid) is None:
         print("No youtube stream available with this category")
     else:
-        vid = yt.streams.filter(only_audio=True, file_extension="mp4")
+        vid.filter(only_audio=True, file_extension="mp4")
         vid[0].download(r"C:\YTDownloads")
 
 

@@ -131,7 +131,7 @@ def download_vid(song_number):
     try:
         global yes_button
 
-        youtube = build("youtube", "v3", credentials=credentials)
+        youtube: object = build("youtube", "v3", credentials=credentials)
         pytube_download(song_number + counter)
         print("Download Complete...")
         youtube.videos().rate(id=ids[song_number + counter], rating="none").execute()

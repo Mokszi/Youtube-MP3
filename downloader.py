@@ -147,17 +147,21 @@ def download_vid(song_number):
 
 
 def pytube_download(song_number):
-    link = ("https://youtu.be/"+ids[song_number])
+    link = "https://youtu.be/" + ids[song_number]
     video = YT(link, use_oauth=True, allow_oauth_cache=True)
-    vid = video.streams
-    vid.filter(only_audio=True, file_extension="mp4", audio_codec="mp4a.40.5")
-    if len(vid) == 1:
-        vid[0].download(r"C:\YTDownloads")
-    elif len(vid) == 0 or len(vid) is None:
-        print("No youtube stream available with this category")
+
+    # Get the best stream with the "video/mp4" mime type
+    video_stream = video.streams.filter(mime_type="video/mp4").first()
+
+    if video_stream:
+        # Create a directory if it doesn't exist
+        output_dir = "C:\\YTDownloads"
+        os.makedirs(output_dir, exist_ok=True)
+
+        # Download the video stream
+        video_stream.download(output_path=output_dir)
     else:
-        vid.filter(only_audio=True, file_extension="mp4")
-        vid[0].download(r"C:\YTDownloads")
+        print("No suitable .MP4 stream found for this video.")
 
 
 # Buttons

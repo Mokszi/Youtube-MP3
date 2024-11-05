@@ -29,7 +29,7 @@ if not credentials or not credentials.valid:
                                                                  "https://www.googleapis.com/auth/youtube",
                                                                  "https://www.googleapis.com/auth/youtube.force-ssl"])
 
-        flow.run_local_server(port=8080, prompt='consent', authorization_prompt_message='')
+        flow.run_local_server(port=, prompt='consent', authorization_prompt_message='')
         credentials = flow.credentials
 
         # Save the credentials for the next run
